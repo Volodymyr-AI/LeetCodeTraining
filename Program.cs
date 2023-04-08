@@ -5,56 +5,49 @@
         static void Main(string[] args)
         {
             //Test cases
-            string s0 = "babad";
-            string s1 = "cbbd";
-            string s2 = "cc";
-            string s3 = "ac";
+            string case0 = "abba", case1 = "egge";
+            bool result = IsIsomorphic(case0, case1);
+            Console.WriteLine(result);
 
-            string palidrom = LongestPalindrome(s3);
-            Console.WriteLine(palidrom);
         }
-        // Find longest polindromic substring
-        public static string LongestPalindrome(string s)
+        //Isomorphic 
+        public static bool IsIsomorphic(string s, string t)
         {
-            if (s == null || s.Length == 0)
+            if(s.Length != t.Length)
             {
-                return ""; 
+                return false;
             }
 
-            if(s.Length == 2 && s[0] != s[1])
-            {
-                return s[0].ToString();
-            }
+            Dictionary<char, char> map = new Dictionary<char, char>();
+            HashSet<char> usedChars = new HashSet<char>();
 
-            int start = 0, end = 0;
-
-            // Here I will use custom method ExpandAroundCenter
             for(int i = 0; i < s.Length; i++)
             {
-                int len1 = ExpandAroundCenter(s, i, i);
-                int len2 = ExpandAroundCenter(s, i, i + 1);
-                int len = Math.Max(len1, len2);
-                if(len > end - start)
+                char sc = s[i];
+                char tc = t[i];
+
+                if (map.ContainsKey(sc))
                 {
-                    start = i - (len - 1) / 2;
-                    end = i + len/2;
+                    if (map[sc] != tc)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (usedChars.Contains(tc))
+                    {
+                        return false;
+                    }
+
+                    map[sc] = tc;
+                    usedChars.Add(tc);
                 }
             }
-            return s.Substring(start, end - start + 1);
+
+            return true;
         }
 
-        // So what does this method do: It iterates over each position in the string and expands the palindrome in both directions, starting at the current position
-        private static int ExpandAroundCenter(string s, int left, int right)
-        {
-            while(left >= 0 && right < s.Length && s[left] == s[right])
-            {
-                left--;
-                right++;
-            }
-
-            return right - left - 1;
-        }
-
-        //Result: Runtime > 78.31%; Memory >  73.7%
+        //Result: 
     }
 }
