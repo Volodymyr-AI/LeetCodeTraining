@@ -1,53 +1,48 @@
-﻿namespace LeetCodeTraining
+﻿using System.Runtime.CompilerServices;
+
+namespace LeetCodeTraining
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             //Test cases
-            string case0 = "abba", case1 = "egge";
-            bool result = IsIsomorphic(case0, case1);
-            Console.WriteLine(result);
-
+            
+       
         }
-        //Isomorphic 
-        public static bool IsIsomorphic(string s, string t)
+        //IsSubsequence
+        public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
-            if(s.Length != t.Length)
+            // creating new List where sorted result will be stored
+            ListNode head = new ListNode();
+            ListNode tail = head;
+
+            while (list1 != null && list2 != null)// iterate through list1 and list2
             {
-                return false;
-            }
-
-            Dictionary<char, char> map = new Dictionary<char, char>();
-            HashSet<char> usedChars = new HashSet<char>();
-
-            for(int i = 0; i < s.Length; i++)
-            {
-                char sc = s[i];
-                char tc = t[i];
-
-                if (map.ContainsKey(sc))
+                if(list1.val <= list2.val)
                 {
-                    if (map[sc] != tc)
-                    {
-                        return false;
-                    }
+                    tail.next = list1;
+                    list1 = list1.next;
                 }
                 else
                 {
-                    if (usedChars.Contains(tc))
-                    {
-                        return false;
-                    }
-
-                    map[sc] = tc;
-                    usedChars.Add(tc);
+                    tail.next = list2;
+                    list2 = list2.next;
                 }
+                tail = tail.next;
             }
 
-            return true;
+            if(list1 != null)
+            {
+                tail.next = list1;
+            }
+            else
+            {
+                tail.next = list2;
+            }
+            return head.next;
         }
 
-        //Result: Runtime > 47% Memory > 40 
+        //Result: 
     }
 }
