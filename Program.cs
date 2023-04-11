@@ -43,6 +43,6 @@ namespace LeetCodeTraining
             return head.next;
         }
 
-        //Result: 
+        //Result: Time > 60%   Memory > 80%
     }
 }
