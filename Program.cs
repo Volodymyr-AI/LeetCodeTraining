@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 
 namespace LeetCodeTraining
 {
@@ -7,42 +8,28 @@ namespace LeetCodeTraining
         static void Main(string[] args)
         {
             //Test cases
-            
-       
+            //Input: head = [1, 2, 3, 4, 5]
+            //Output: [3,4,5]
+            //Explanation: The middle node of the list is node 3.
+
+
         }
-        //IsSubsequence
-        public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
+        //Given the head of a singly linked list, return the middle node of the linked list. If there are two middle nodes, return the second middle node.
+        public ListNode MiddleNode(ListNode head)
         {
-            // creating new List where sorted result will be stored
-            ListNode head = new ListNode();
-            ListNode tail = head;
+            ListNode slow = head;
+            ListNode fast = head;
 
-            while (list1 != null && list2 != null)// iterate through list1 and list2
+            while (fast != null && fast.next != null)
             {
-                if(list1.val <= list2.val)
-                {
-                    tail.next = list1;
-                    list1 = list1.next;
-                }
-                else
-                {
-                    tail.next = list2;
-                    list2 = list2.next;
-                }
-                tail = tail.next;
+                slow = slow.next;
+                fast = fast.next.next;
             }
 
-            if(list1 != null)
-            {
-                tail.next = list1;
-            }
-            else
-            {
-                tail.next = list2;
-            }
-            return head.next;
+            return slow;
         }
 
-        //Result: Time > 60%   Memory > 80%
+
+        //Result: Time > 30%   Memory > 89%
     }
 }
